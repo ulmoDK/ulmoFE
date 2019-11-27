@@ -5,7 +5,7 @@ from Elements import BeamElem
 from Mesh import BeamMesh
 from Assembler import Assembly
 
-
+# to-do: create doc-strings
 
 if __name__ == "__main__":
     #BE = BeamElem()
