@@ -7,6 +7,7 @@ Created on Sat Nov 23 23:16:28 2019
 
 import numpy as np
 from scipy.linalg import eigh
+from scipy.linalg import eig
 
 from Elements import BeamElem
 from Mesh import BeamMesh
@@ -34,46 +35,48 @@ class Assembly:
         return G
         
 
+
+    def imposeBC(self,bcNodes):
+        
+        
+        for node in bcNodes:
+            self.K[node,:]=0.0
+            self.K[:,node]=0.0
+            self.K[node,node]=1.0
+            
+            self.M[node,:]=0.0
+            self.M[:,node]=0.0
+            
+        
+        
+        return self
+    
+    
     
     
 if __name__ == "__main__":
-    #BE = BeamElem()
-    #BE.Kelem()
-    #print(BE.K)
-    #print(BE.M)
-    
+ 
+    # Staticproperties    
     EI = 1.0
     A = 1.0
     rho = 1.0
-    numElems =6000
+    numElems = 50
     length = 1.0/numElems
     
+    # Create mesh and elements
     BM = BeamMesh()
     BM.createBeamMesh(numElems,length,EI,rho,A)
     
-    
-    
-    #print(BM.meshElems)
-    
-    A = Assembly(BM.mesh)
-    
-    M = A.M
-    K = A.K
-    #print(K)
-    #print(M)
-    print(BM.mesh["mesh"][0]["K"])
-    
+    # Assemble and impose B.C.'s
+    A = Assembly(BM.mesh)    
     restrained_dofs = [1, 0, -2, -1]
-    # remove the fixed degrees of freedom
-    for dof in restrained_dofs:
-        for i in [0,1]:
-            M = np.delete(M, dof, axis=i)
-            K = np.delete(K, dof, axis=i)
-    
-    
-    evals, evecs = eigh(K,M)
+    A.imposeBC(restrained_dofs)
+
+    # solve
+    evals, evecs = eig(A.K,A.M)
+    evals.sort()
     frequencies = np.sqrt(evals)
-    print(frequencies[0])
+    print(frequencies[0].real)
     print(4.730041**2)
 	
 
