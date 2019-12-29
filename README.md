@@ -1,6 +1,6 @@
 # Introduction
 
-My small finite element pet-project. Created for my-self to make a object-oriented finite element code that is easy for me to extend.
+My small finite element pet-project. Created for my-self to make a object-oriented finite element code that is easy for me to extend. Still in a start up phase.
 
 # Contribute
 
