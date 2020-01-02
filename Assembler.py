@@ -12,6 +12,9 @@ from scipy.linalg import eig
 from Elements import BeamElem
 from Mesh import BeamMesh
 
+
+
+
 class Assembly:
     
     def __init__(self,mesh):
@@ -54,33 +57,7 @@ class Assembly:
 
 
 
-class Solve:
-    
-    def __init__(self,Assembly,method):
-        
-        self.K = Assembly.K
-        self.M = Assembly.M
-        
-        if method == "eigen_frequency":
-            self.eigenFreq()
-            self.printLowFreq()
-    
-    
 
-    def eigenFreq(self):
-        
-        evals, self.evecs = eig(A.K,self.M)
-        evals.sort()
-        self.freq = np.sqrt(evals)
-        
-        
-        return self
-    
-    def printLowFreq(self):
-        
-        print("The lowest frequency is {}".format(frequencies[0].real))
-    
-    
     
 if __name__ == "__main__":
  

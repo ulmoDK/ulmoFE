@@ -31,7 +31,7 @@ class Solve:
 
     def eigenFreq(self):
         
-        evals, self.evecs = eig(A.K,self.M)
+        evals, self.evecs = eig(self.K,self.M)
         evals.sort()
         self.freq = np.sqrt(evals)
         
@@ -40,7 +40,7 @@ class Solve:
     
     def printLowFreq(self):
         
-        print("The lowest frequency is {}".format(frequencies[0].real))
+        print("The lowest frequency is {}".format(self.freq[0].real))
     
     
     
