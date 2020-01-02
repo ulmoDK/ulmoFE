@@ -66,6 +66,21 @@ class Assembly:
 
 
 
+    def createLoadVector(self,loadNodes,loadMagnitude):
+        
+        
+        if len(loadNodes) != len(loadMagnitude):
+            raise ValueError("loadNodes and loadMagnitude must both be lists, and must be the same length")
+        
+        self.loadVector = np.zeros([self.K.shape[0],1])
+        
+        for node,magnitude in zip(loadNodes,loadMagnitude):
+            self.loadVector[node]=magnitude
+
+        return self.loadVector
+
+
+
     
 if __name__ == "__main__":
  

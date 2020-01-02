@@ -26,8 +26,13 @@ class Solve:
         if method == "eigen_frequency":
             self.eigenFreq()
             self.printLowFreq()
+        
+        if method == "StaticDisplacement":
+            self.StaticDisplacement(Assembly.loadVector)
     
-    
+    def StaticDisplacement(self,loadVector):
+        self.Displacement=np.linalg.inv(self.K).dot(loadVector)
+        return self.Displacement
 
     def eigenFreq(self):
         
