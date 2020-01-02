@@ -35,9 +35,10 @@ class BeamMesh:
                 dof.append(d)
            
         
-        BE=BeamElem(length,EI,rho,A)
+        #BE=BeamElem(length,EI,rho,A)
         
-        elem = {"nodes":  nodes, "dofs" : dof, "K" : BE.K, "M" : BE.M}
+        #elem = {"nodes":  nodes, "dofs" : dof, "K" : BE.K, "M" : BE.M}
+        elem = {"nodes":  nodes, "dofs" : dof, "length" : length, "EI" : EI, "rho" : rho, "A" : A}
         
         
         return elem

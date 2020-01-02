@@ -6,8 +6,8 @@ Created on Sat Nov 23 23:16:28 2019
 """
 
 import numpy as np
-from scipy.linalg import eigh
-from scipy.linalg import eig
+#from scipy.linalg import eigh
+#from scipy.linalg import eig
 
 from Elements import BeamElem
 from Mesh import BeamMesh
@@ -22,19 +22,27 @@ class Assembly:
         self.mesh = mesh
         self.K = self.createGlobal("K")
         self.M = self.createGlobal("M")
-        #print(self.K)
+        
+        
+        
+        
         
     def createGlobal(self,GM="K"):
+        
         G = np.zeros((self.mesh["numNodes"]*2,self.mesh["numNodes"]*2))
         
         
         localDofs = list(range(4))
         for elem in self.mesh["mesh"]:
+            BE=BeamElem(elem["length"],elem["EI"],elem["rho"],elem["A"])
+            elem["K"]=BE.K
+            elem["M"]=BE.M
             globalDofs = elem["dofs"]
             for globalRow,localRow in zip(globalDofs,localDofs):
                 for globalCol,localCol in zip(globalDofs,localDofs):
                     G[globalRow,globalCol] += elem[GM][localRow,localCol]
-                    
+            elem["K"]=None # The matrix is set to zero to save memory
+            elem["M"]=None # The matrix is set to zero to save memory                   
         return G
         
 
@@ -78,7 +86,7 @@ if __name__ == "__main__":
     A.imposeBC(restrained_dofs)
 
     # solve
-    Solve(A,"eigen_frequency")
+    #Solve(A,"eigen_frequency")
     
     """
     evals, evecs = eig(A.K,A.M)

@@ -24,6 +24,7 @@ if __name__ == "__main__":
     
     
     
+    
     # Assemble and impose B.C.'s
     A = Assembly(BM.mesh)
     A = Assembly(BM.mesh)    
